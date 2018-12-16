@@ -151,7 +151,7 @@ module ImpressionistController
       user.id rescue nil
     end
     def user_type
-      user.class.name rescue nil
+      user.class.name rescue nil unless user.nil?
     end
     def user
       user = nil
