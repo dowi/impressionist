@@ -6,6 +6,7 @@ module Impressionist
   mattr_accessor :user_function
   @@orm = :active_record
   @@user_function = nil
+  @@global_exclude = []
 
   # Load configuration from initializer
   def self.setup
