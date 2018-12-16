@@ -4,6 +4,7 @@ class CreateImpressionsTable < ActiveRecord::Migration<%= Rails::VERSION::MAJOR 
       t.string :impressionable_type
       t.integer :impressionable_id
       t.integer :user_id
+      t.string :user_type
       t.string :controller_name
       t.string :action_name
       t.string :view_name
@@ -24,6 +25,7 @@ class CreateImpressionsTable < ActiveRecord::Migration<%= Rails::VERSION::MAJOR 
     add_index :impressions, [:controller_name,:action_name,:session_hash], :name => "controlleraction_session_index", :unique => false
     add_index :impressions, [:impressionable_type, :impressionable_id, :params], :name => "poly_params_request_index", :unique => false, :length => {:params => 255 }
     add_index :impressions, :user_id
+    add_index :impressions, [:user_type, :user_id]
   end
 
   def self.down
