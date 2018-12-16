@@ -38,11 +38,13 @@ module ImpressionistController
     end
 
     def impressionist_subapp_filter(opts = {})
-      if should_count_impression?(opts)
-        actions = opts[:actions]
-        actions.collect!{|a|a.to_s} unless actions.blank?
-        if (actions.blank? || actions.include?(action_name)) && unique?(opts[:unique])
-          Impression.create(direct_create_statement)
+      if should_count_impression?(opts)   
+        unless Impressionist.global_exclude.include?(action_name)
+          actions = opts[:actions]
+          actions.collect!{|a|a.to_s} unless actions.blank?
+          if (actions.blank? || actions.include?(action_name)) && unique?(opts[:unique])
+            Impression.create(direct_create_statement)
+          end
         end
       end
     end
