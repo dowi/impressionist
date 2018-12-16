@@ -56,6 +56,7 @@ module ImpressionistController
         :controller_name => controller_name,
         :action_name => action_name,
         :user_id => user_id,
+        :user_type => user_type,
         :request_hash => @impressionist_hash,
         :session_hash => session_hash,
         :ip_address => request.remote_ip,
@@ -147,9 +148,23 @@ module ImpressionistController
 
     #use both @current_user and current_user helper
     def user_id
-      user_id = @current_user ? @current_user.id : nil rescue nil
-      user_id = current_user ? current_user.id : nil rescue nil if user_id.blank?
-      user_id
+      user.id rescue nil
+    end
+    def user_type
+      user.class.name rescue nil
+    end
+    def user
+      user = nil
+      user_function = Impressionist.user_function
+      
+      if user_function.nil?
+        user = @current_user ? @current_user : nil rescue nil
+        user = current_user ? current_user : nil rescue nil if user.blank?
+      else
+        user = public_send(user_function)
+      end
+
+      user
     end
   end
 end
