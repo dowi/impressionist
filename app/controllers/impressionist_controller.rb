@@ -161,7 +161,7 @@ module ImpressionistController
         user = @current_user ? @current_user : nil rescue nil
         user = current_user ? current_user : nil rescue nil if user.blank?
       else
-        user = public_send(user_function)
+        user = send(user_function)
       end
 
       user
