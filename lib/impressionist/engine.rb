@@ -1,11 +1,9 @@
 module Impressionist
   class Engine < ::Rails::Engine
     attr_accessor :orm
-    attr_accessor :user_function
 
   initializer 'impressionist.model' do |app|
     @orm = Impressionist.orm
-    @user_function = Impressionist.user_function
     include_orm
   end
 
